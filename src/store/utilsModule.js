@@ -1,4 +1,4 @@
-
+import { notify } from "@kyvg/vue3-notification";
 
 
 
@@ -9,6 +9,7 @@ export const utilsModule = {
         error:'',
         success:'',
         isLoading:false,
+        Notify:false
     }),
 
     mutations:{
@@ -25,6 +26,22 @@ export const utilsModule = {
             setTimeout(() => {
                 state.success = ''
             },5000)
+        },
+
+        SET_NOTIFY(state,booleen){
+            state.Notify = booleen
+        }
+    },
+
+    actions:{
+        Notify: ({commit},payload) =>{
+            commit('SET_NOTIFY',true)
+            notify({
+                title:payload.title,
+                type: payload.type, 
+                text: payload.text
+            })
+            commit('SET_NOTIFY',false)
         }
     },
 

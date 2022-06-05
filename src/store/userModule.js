@@ -56,12 +56,12 @@ export const userModule = {
         async login({commit}, payload){
             try{
                 commit('SET_LOADING',true)
-                let data
+                console.log(payload)
                 let userLogin = {
                     email:payload.email,
                     password:payload.password
                 }
-                data = await AuthService.login(userLogin)
+                const data = await AuthService.login(userLogin)
                 if(data.role ==='CUSTOMERS'){
                     let customer = await customerServices.getCustomerInfo(data.id)
                     commit('SET_CUSTOMER',customer)

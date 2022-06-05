@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card v-if="customerInfo">
     <v-card-title>
       <span class="text-h5 text-primary">Заказ № {{ props.ids.id }}</span>
     </v-card-title>
@@ -9,7 +9,7 @@
     <v-card-text>
       <v-container>
         <v-row>
-          <v-col cols="12" sm="6" md="4">
+          <v-col cols="12" sm="12" >
             <v-text-field
               v-model="customerInfo.customer_name"
               variant="outlined"
@@ -20,31 +20,9 @@
               readonly
             ></v-text-field>
           </v-col>
-          <v-col cols="12" sm="6" md="4">
-            <v-text-field
-              v-model="customerInfo.customer_name"
-              variant="outlined"
-              hide-details
-              color="primary"
-              density="compact"
-              label="Фамилия"
-              readonly
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" sm="6" md="4">
-            <v-text-field
-              v-model="customerInfo.customer_name"
-              variant="outlined"
-              hide-details
-              color="primary"
-              density="compact"
-              label="Отчество*"
-              readonly
-            ></v-text-field>
-          </v-col>
           <v-col cols="12" sm="6">
             <v-text-field
-              v-model="customerInfo.customer_id"
+              v-model="email"
               variant="outlined"
               hide-details
               color="primary"
@@ -99,7 +77,8 @@
                     Осуществить запрос на склад
                   </v-btn>
                   <div
-                    v-else-if="orderInfo[0].order_status !== 'ACCEPTED'"
+                  
+                    v-else-if="orderInfo[0].order_status !== 'ACCEPTED' && department !== 'Отдел сбыта'"
                     class="btn-realise"
                   >
                     <v-btn
@@ -126,7 +105,7 @@
               </v-row>
             </v-col>
 
-            <v-col cols="12" v-else-if="orderInfo[0].order_status === 'PRODUCTION0'">
+            <v-col cols="12" v-else-if="orderInfo[0].order_status === 'PRODUCTION'">
               <div class="text-subtitle-2">
                 <span>Выберите действие</span>
               </div>
@@ -149,6 +128,7 @@
 <script setup>
 import { computed, onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
+// import {ucFirst} from '@/helpers/helper'
 import productTableVue from "./productTable.vue";
 import TimeLineVue from "../UI/TimeLine.vue";
 
@@ -166,6 +146,14 @@ const role = computed(() => {
   return store.getters.role;
 });
 
+const department = computed(() => {
+  return store.getters.department;
+});
+
+const email = computed(() => {
+  return store.state.user.user.email;
+});
+
 const close = () => {
   emit("closeDialog");
 };
@@ -173,6 +161,7 @@ const close = () => {
 const customerInfo = computed(() => {
   return store.getters.getCustomer;
 });
+
 
 const orderInfo = computed(() => {
   return store.getters.orders.filter((item) => item.order_id === props.ids.id);

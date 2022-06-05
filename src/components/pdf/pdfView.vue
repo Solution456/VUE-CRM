@@ -74,13 +74,13 @@
               <tr v-for="(item,index) in orderInfo[0].products" :key="index">
                 <td>{{index+1}}</td>
                 <td class="text-center">{{item.product_name}}</td>
-                <td class="text-center">{{item.product_id}}</td>
-                <td class="text-center">225</td>
-                <td class="text-center">{{item.product_id * 225}}Р</td>
+                <td class="text-center">{{item.order_product['total']}}</td>
+                <td class="text-center">{{item.product_cost}}</td>
+                <td class="text-center">{{item.order_product['total'] * item.product_cost}}Р</td>
               </tr>
               <tr class="bg-gray bold">
                 <td colspan="4">ИТОГО</td>
-                <td>TOTAL</td>
+                <td>{{total}} Р</td>
               </tr>
             </tbody>
           </table>
@@ -98,7 +98,7 @@
         </div>
         <p class="mt-2">
           Претензий по качеству выполенных работ и сроках их выполнения Заказчик
-          к Исполнителю не имеет
+          к Исполнителю не имеет 
         </p>
         <div class="customer-sign mt-2">
           <p class="bold">Заказчик {{customerInfo.customer_name}}/___________</p>
@@ -125,9 +125,21 @@ const customerInfo = computed(() => {
   return store.getters.getCustomer;
 });
 
+
+
 const orderInfo = computed(() => {
   return store.getters.orders.filter((item) => item.order_id === props.ids.id);
 });
+
+const total = computed(() => {
+  let ar = store.getters.orders.filter((item) => item.order_id === props.ids.id);
+  let result = 0
+  for (let item of ar[0].products){
+    result += item.product_cost * item.order_product['total']
+    
+  }
+  return result
+})
 
 onMounted(() => {
   console.log("Mounted");

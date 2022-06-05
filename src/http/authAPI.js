@@ -5,6 +5,7 @@ import jwt_decode from 'jwt-decode'
 
 class AuthServices {
     async login(user) {
+        console.log(user)
         const {data} = await $host.post('api/user/login', {
             "email": user.email,
             "password": user.password

@@ -2,8 +2,8 @@
  <div class="auth">
   <v-container fluid>
       <v-layout full-height class="justify-center align-center">
-           <v-flex xs12 sm8 md4>
-               <v-card>
+           <v-flex>
+               <v-card elevation="1">
                    <v-img
                         :src="require('@/assets/logo.svg')"
                         max-height="50"
@@ -61,13 +61,8 @@ const auth = ()=>{
        }
 }
 const login =  async (user) => {
-   try{
-       store.dispatch('login',user)
-       setTimeout(auth, 1000)
-       
-   } catch{
-       console.log('Ошибка')
-   }
+       await store.dispatch('login',user)
+       auth() 
    
 }
 
@@ -86,5 +81,11 @@ const register = async (user) => {
     width: 100%;
     background-color: #BDBDBD;
 }
+
+.v-layout{
+    overflow: visible !important;
+}
+
+
 
 </style>

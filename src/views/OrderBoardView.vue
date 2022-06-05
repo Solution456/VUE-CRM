@@ -161,11 +161,13 @@ const checkRoute = () => {
   if (
     localStorage.getItem("token") &&
     role.value !== "OPERATOR" &&
-    role.value !== "ADMIN"
+    role.value !== 'ADMIN'
   ) {
     router.push("/");
-  } else {
-    setTimeout(store.dispatch("fetchOrders"), 2000);
+  } else if(role.value === 'ADMIN'){
+    router.push('/admin')
+  }else{
+    store.dispatch("fetchOrders")
   }
 };
 

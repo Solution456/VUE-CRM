@@ -11,6 +11,11 @@
           Создать администратора
         </v-btn>
       </v-col>
+       <v-col class="text-center">
+        <v-btn @click="ShowDialog2 = !ShowDialog2" color="primary">
+          Добавить продукт
+        </v-btn>
+      </v-col>
     </v-row>
     <v-row class="mt-4">
       <v-col cols="12">
@@ -43,19 +48,28 @@
         @CloseDialog="ShowDialog = !ShowDialog"
       />
     </v-dialog>
+     <v-dialog v-model="ShowDialog2">
+      <ProductFormVue
+        @emitData="CreateProduct"
+        @CloseDialog="ShowDialog2 = !ShowDialog2"
+      />
+    </v-dialog>
   </v-container>
 </template>
 
 <script setup>
 import AdminChartVue from "@/components/Admin/AdminChart.vue";
 import OperatorFormVue from "@/components/UI/OperatorForm.vue";
+import ProductFormVue from "@/components/Admin/ProductForm.vue";
 import userService from "@/http/authAPI";
+import ProductServices from "@/http/productAPI"
 import { ref } from "@vue/reactivity";
 import { computed, onMounted } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 
 const ShowDialog = ref(false);
+const ShowDialog2 = ref(false);
 const store = useStore();
 const router = useRouter();
 
@@ -78,9 +92,16 @@ const CreateOperator = async (data) => {
   await userService.createOperator(data);
   console.log("Успех");
 };
+const CreateProduct = async (data) => {
+  try{
+    const product = await ProductServices.createProduct(data)
+    store.dispatch('Notify',{titel:product.product_name,text:"Создание продукта прощло успешно", type:"success"})
+  }catch (er){
+    store.dispatch('Notify',{title:'Ошибка',text:er.response.data.message,type:'error'})
+  }
+}
 
 const dateYear = (year) => {
-  console.log(year);
   const resultArray = [];
   const countOrder = {
     0: 0,

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="auth-card pa-3" style="width:28rem">
+  <v-card class="auth-card pa-3" style="width:29rem">
       
       <v-card-title class="d-flex align-center justify-center py-1">
          <span class="text-2xl font-weight-semibold">Авторизация в системе обработки
@@ -22,18 +22,22 @@
                 color="secondary"
                 label="Email"
                 v-model="user.email"
+                :rules="[rules.email]"
+                required
                 placeholder="john@example.com"
-                hide-details
+                
                 class="mb-3"
                 ></v-text-field>
                 <v-text-field
+                
                 v-model='user.password'
                 color="secondary"
                 type="password"
                 variant="outlined"
                 label="Пароль"
                 placeholder="············"
-                hide-details
+                required
+                :rules="[rules.required]"
                 ></v-text-field>
                 <v-btn
                     @click="loginUser"
@@ -57,6 +61,7 @@
 import {reactive} from '@vue/reactivity'
 import { computed } from '@vue/runtime-core'
 import { useStore } from 'vuex'
+import {rules} from '@/helpers/rulesValidate'
 
 const emit = defineEmits(['login',])
 

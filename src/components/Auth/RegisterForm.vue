@@ -84,7 +84,7 @@
               color="secondary"
               v-model="registrUser.address"
               label="Юрид. адрес"
-              hide-details
+              
               density="compact"
             >
             </v-text-field>
@@ -108,6 +108,7 @@
 import { reactive } from "@vue/reactivity";
 import { computed } from "@vue/runtime-core";
 import { useStore } from "vuex";
+
 
 const emit = defineEmits(['register'])
 const store = useStore()

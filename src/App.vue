@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <notifications position="top center" />
     <SideBar v-if="isAuth"/>
     <v-main
     >
@@ -13,11 +14,15 @@
 import SideBar from '@/components/SideBar.vue'
 import { computed, onMounted } from "@vue/runtime-core";
 import { useStore } from "vuex";
+
+
+
 const store = useStore()
 
 const isAuth = computed(() =>{
   return store.getters.isAuth
 })
+
 
 
 

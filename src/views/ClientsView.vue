@@ -47,6 +47,7 @@ const openOrder = (data) => {
 const fetchData = () => {
     store.dispatch('fetchCustomerWithOrders').then(data => {
         data.forEach(element => {
+            console.log(element)
             CustomersData.push(element)
         });
     })
@@ -57,7 +58,7 @@ const checkRoute = ()=> {
     router.push('/')
   }
   else {
-    setTimeout(fetchData(),2000)
+    fetchData()
   }
 }
 

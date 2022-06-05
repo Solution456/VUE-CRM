@@ -15,7 +15,7 @@
             <tr class="font-semibold text-muted bg-primary">
               <th class="pl-4 min-width-325 rounded-start">Клиент</th>
               <th class="min-w-200px">Телефон, адрес</th>
-              <th class="min-w-125px">Кол-во заказов</th>
+              <th class="min-w-125px text-center">Кол-во заказов</th>
               <th class="min-w-125px text-center pr-4 rounded-end">Действия</th>
             </tr>
           </thead>
@@ -42,10 +42,9 @@
                 </div>
               </td>
               <td>
-                <div class="d-flex align-center">
+                <div class="d-flex justify-center align-center">
                   <div class="d-flex justify-center flex-column">
                     <span>{{ cus.orders.length }}</span>
-                    <span class="text-muted d-block">Орга</span>
                   </div>
                 </div>
               </td>

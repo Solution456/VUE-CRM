@@ -99,6 +99,7 @@
             :key="Var.id"
             :id="Var.id"
             :products="product"
+            @updateTotal="updateTotalInList"
             @remove="removeProduct"
             @setProduct="setInProductList"
           >
@@ -128,7 +129,7 @@ import { uid } from "uid";
 import { useStore } from "vuex";
 
 const store = useStore();
-const emit = defineEmits(["emitData"]);
+const emit = defineEmits(["emitData", "closeDialog"]);
 
 let product = [];
 let productsList = reactive([]);
@@ -154,13 +155,21 @@ const setInProductList = (product) => {
     id: product.id,
     product_id: product.product,
     cost: product.cost,
+    total:product.total
   };
 };
+
+const updateTotalInList = (total) => {
+  let id = productsList.findIndex((item) => item.id === total.id)
+  productsList[id].total = isNaN(parseInt(total.total,10))? 0: parseInt(total.total,10)
+  console.log(productsList[id])
+}
 function addProductInList() {
   productsList.push({
     id: uid(8),
     product_id: ref(""),
     cost: ref(0),
+    total:ref(0)
   });
 }
 function removeProduct(id) {
@@ -173,6 +182,7 @@ const emitData = () => {
     products: productsList,
   };
   emit("emitData", data);
+  emit("closeDialog")
   productsList = reactive([]);
 };
 onMounted(() => {

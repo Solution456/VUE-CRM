@@ -9,6 +9,14 @@ class ProductServices {
         
         return data
     }
+
+    async createProduct(payload){
+        const {data} = await $authHost.post('api/product', {
+            product_name: payload.productName,
+            product_cost: payload.productCost
+        })
+        return data
+    }
  
 }
 export default new ProductServices()

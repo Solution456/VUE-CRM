@@ -4,12 +4,14 @@
       <tr>
         <th class="text-left">Продукт</th>
         <th class="text-left">Стоимость</th>
+        <th class="text-left">Кол-во</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="item in props.items[0].products" :key="item.name">
         <td>{{ item.product_name }}</td>
-        <td>{{ item.product_id }}</td>
+        <td>{{ item.product_cost }}</td>
+        <td>{{ item.order_product['total'] }}</td>
       </tr>
     </tbody>
   </v-table>
